@@ -398,6 +398,15 @@ bitflags! {
 }
 
 impl BaseDocument {
+    /// The shared Parley font context.
+    ///
+    /// Callers use it to ask what the platform actually provides (family names,
+    /// fallbacks) before writing a `font-family` stack, or to register a font
+    /// after the document was created.
+    pub fn font_context(&self) -> Arc<Mutex<parley::FontContext>> {
+        Arc::clone(&self.font_ctx)
+    }
+
     /// Create a new (empty) [`BaseDocument`] with the specified configuration
     pub fn new(config: DocumentConfig) -> Self {
         init_stylo_prefs();
